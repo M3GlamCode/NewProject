@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+<div class="container bg-white rounded shadow w-75">
+	<form method="POST", action="">
+		{{ businessform.hidden_tag() }}
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">Update business</legend>
+	        <div class="form-group mb-3">
+	        	{{ businessform.business_name.label(class="form-control-label") }}
+
+					{% if businessform.business_name.errors %}
+						{{ businessform.business_name(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in businessform.business_name.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+						</div>						
+					{% else %}
+						{{ businessform.business_name(class="form-control") }}
+					{% endif %}	
+	        </div>
+
+	        <div class="form-group mb-3">
+	          	{{ businessform.business_category.label(class="form-control-label") }}
+				{{ businessform.business_category(class="form-control") }}
+	        </div>
+
+	        <div class="form-group mb-3">
+	          	{{ businessform.business_email.label(class="form-control-label") }}
+
+					{% if businessform.business_email.errors %}
+						{{ businessform.business_email(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in businessform.business_email.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+						</div>						
+					{% else %}
+						{{ businessform.business_email(class="form-control") }}
+					{% endif %}	
+	        </div>
+
+	        <div class="form-group mb-3">
+	          	{{ businessform.description.label(class="form-control-label") }}
+
+					{% if businessform.description.errors %}
+						{{ businessform.description(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in businessform.description.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+						</div>						
+					{% else %}
+						{{ businessform.description(class="form-control") }}
+					{% endif %}		
+	        </div>
+
+	        <div class="form-group mb-3">
+	          	{{ businessform.address.label(class="form-control-label") }}
+
+					{% if businessform.address.errors %}
+						{{ businessform.address(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in businessform.address.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+						</div>						
+					{% else %}
+						{{ businessform.address(class="form-control") }}
+					{% endif %}
+	        </div>
+
+	        <div class="modal-footer d-flex justify-content-center">
+	        {{ businessform.business_submit(class="btn btn-outline-info") }}
+	      	</div>
+	    </fieldset>
+	</form>
+</div>
+{% endblock content %}
