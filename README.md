@@ -4,7 +4,6 @@ A web application that provides a platform that brings businesses and individual
 A user can register a business only if logged in<br />
 A user can edit and delete business only businesses they themselves have registered<br />
 A user can edit their user account information<br />
-Any user can search for businesses according to category without logging in<br />
 A user should be logged in to read and write reviews for businesses<br />
-
+A user should be logged in to search for businesses according to category<br />
 
