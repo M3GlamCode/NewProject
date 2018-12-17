@@ -9,6 +9,9 @@ from flask_login import login_user, logout_user, current_user, login_required
 def home():
 	businesses = Business.query.all()
 	form = SearchForm()
+	if request.method == 'POST' and current_user.is_anonymous:
+		flash('Log in to get search results', 'info')
+		return redirect(url_for('login'))
 	if form.validate_on_submit():
 		myquery = form.search.data
 		businesses = Business.query.filter_by(business_category=myquery).all()
@@ -24,7 +27,7 @@ def add():
 	if form.validate_on_submit():
 		business = Business(business_name=form.business_name.data, business_category=form.business_category.data, 
 							business_email=form.business_email.data, description=form.description.data, 
-							address=form.address.data, reviewer=current_user)
+							address=form.address.data, posted_by=current_user)
 		db.session.add(business)
 		db.session.commit()
 		flash('Business registered', 'success')
@@ -116,6 +119,7 @@ def delete_business(business_id):
 	return redirect(url_for('profile'))
 
 @app.route('/reviews/<int:business_id>', methods=['GET'])
+@login_required
 def read_reviews(business_id):
 	business = Business.query.get_or_404(business_id)
 	form = ReviewForm()
@@ -123,12 +127,16 @@ def read_reviews(business_id):
 	return render_template('reviews.html', business=business, reviews=reviews, form=form)
 
 @app.route('/reviews/<int:business_id>/write', methods=['POST', 'GET'])
+@login_required
 def write_review(business_id):
 	form = ReviewForm()
 	business = Business.query.filter_by(id=business_id).first_or_404()
 
+	if business.posted_by.username == current_user.username:
+		return render_template('reviewspermissiondenied.html')
+
 	if form.validate_on_submit():
-		review = Reviews(reviews=form.business_review.data, business_id=business.id, user_id=current_user.id)
+		review = Reviews(reviewer=current_user.username, reviews=form.business_review.data, business_id=business.id)
 		db.session.add(review)
 		db.session.commit()
 		flash('successfully posted review!', 'success')

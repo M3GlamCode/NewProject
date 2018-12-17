@@ -7,7 +7,7 @@ from biashara.models import User
 
 class RegistrationForm(FlaskForm):
 	username = StringField("Username", 
-				validators=[InputRequired(), length(min=2, max=10)])
+				validators=[InputRequired(), length(min=2, max=25)])
 	email = StringField("Email", 
 				validators=[InputRequired(), Email()])
 	password = PasswordField("Password", 
@@ -54,7 +54,7 @@ class SearchForm(FlaskForm):
 
 class UpdateProfileForm(FlaskForm):
 	username = StringField("Username", 
-				validators=[InputRequired(), length(min=2, max=10)])
+				validators=[InputRequired(), length(min=2, max=25)])
 	email = StringField("Email", 
 				validators=[InputRequired(), Email()])
 	submit = SubmitField("Update account")
@@ -83,7 +83,7 @@ class UpdateBusinessForm(FlaskForm):
 					validators=[InputRequired()])
 	address = TextAreaField("Address", 
 					validators=[InputRequired()])
-	business_submit = SubmitField("Add business")
+	business_submit = SubmitField("Update business")
 
 class ReviewForm(FlaskForm):
 	business_review = TextAreaField("Content")

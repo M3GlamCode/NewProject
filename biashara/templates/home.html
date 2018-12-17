@@ -24,7 +24,7 @@
 		<div class="row mb-2">
 			<div class="col-4"><b>Category:</b> {{ business.business_category }}</div>
 			<div class="col-5"><b>Email:</b> {{ business.business_email }}</div>
-			<div class="col-3"><b>Posted by:</b> {{ business.reviewer.username }}</div>
+			<div class="col-3"><b>Posted by:</b> {{ business.posted_by.username }}</div>
 		</div>
 		<div class="border border-bottom-0 p-2 rounded-top">
 			<p><b>About: </b>{{ business.description }}</p>
@@ -36,7 +36,9 @@
 		</div>		
 		<div class="d-flex p-2 bg-light">
 			<div class="w-50"><a href="{{ url_for('read_reviews', business_id=business.id) }}" class="ml-auto">Reviews</a></div>
+			{% if business.posted_by.username != current_user.username %}
 			<div class="text-right w-50"><a href="{{ url_for('write_review', business_id=business.id) }}" class="mr-auto">Write a review</a></div>
+			{% endif %}
 		</div>
 	</div>
 	{% endfor %}
